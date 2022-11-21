@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -13,7 +14,6 @@ class _MainState extends State<MainPage> {
     return Center(
       child: Column(
         children: [
-          const Text("***님, 어서오세요"), // username displayed
           Card(
             child: Column(
               children: [

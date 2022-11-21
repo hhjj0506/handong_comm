@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:handong_comm/Home.dart';
 import 'package:handong_comm/firebase_options.dart';
+import 'package:username_gen/username_gen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -56,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
     user = await signInWithGoogle();
     bool check = await checkIfDocExists(user.user!.uid);
     print(check);
+    final nickname = UsernameGen().generate(); // generate random username
 
     if (!check) {
       await FirebaseFirestore.instance
@@ -64,6 +66,7 @@ class _LoginPageState extends State<LoginPage> {
           .set(<String, dynamic>{
         'email': user.user!.email,
         'name': user.user!.displayName,
+        'nickname': nickname,
         'message': '',
         'uid': user.user!.uid,
         'photo': user.user!.photoURL,
@@ -71,10 +74,9 @@ class _LoginPageState extends State<LoginPage> {
         'bench': 0,
         'squat': 0,
         'total': 0,
-        'stu_num': 0,
-        'year': 0,
-        'major': 'Handong',
-        'sex': '',
+        'year': 20,
+        'major': 'GLS',
+        'sex': 'M',
       });
     }
   }
@@ -89,8 +91,6 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 80.0),
             Column(
               children: <Widget>[
-                // Image.asset('assets/diamond.png'),
-                // const SizedBox(height: 16.0),
                 const Text('Strong Handong'),
               ],
             ),
