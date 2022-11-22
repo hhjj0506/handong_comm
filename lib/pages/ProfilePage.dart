@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
         }
 
         return Scaffold(
-          body: Center(
+          body: SingleChildScrollView(
             child: Column(
               children: [
                 const SizedBox(
@@ -94,14 +94,42 @@ class _ProfilePageState extends State<ProfilePage> {
                         icon: const Icon(Icons.edit)),
                   ],
                 ),
-                Text(snapshot.data!['nickname']), // 닉네임 들어갈 예정
-                Text(snapshot.data!['message'] == ''
-                    ? '자기소개를 적어주세요!'
-                    : snapshot.data!['message']), // 여기 자기소개
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  snapshot.data!['nickname'],
+                  style: const TextStyle(
+                      fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 5.0,
+                ),
                 Card(
                   child: Column(
                     children: [
-                      Text('개인정보'),
+                      const Text(
+                        '자기소개',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Text(snapshot.data!['message'] == ''
+                          ? '자기소개를 적어주세요!'
+                          : snapshot.data!['message']),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 5.0,
+                ),
+                Card(
+                  child: Column(
+                    children: [
+                      const Text(
+                        '개인정보',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                       Text('이름 : $name'),
                       Text('학부 : ${snapshot.data!['major']}'),
                       Text('학번 : ${snapshot.data!['year']}'),
@@ -109,16 +137,34 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                 ),
+                const SizedBox(
+                  height: 5.0,
+                ),
                 Card(
                   child: Column(
                     children: [
-                      Text('운동 정보'),
+                      const Text(
+                        '운동 정보',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                       Text('스쿼트 : ${snapshot.data!['squat']}'),
                       Text('벤치프레스 : ${snapshot.data!['bench']}'),
                       Text('데드리프트 : ${snapshot.data!['dead']}'),
                       Text('3대 총합 : ${snapshot.data!['total']}'),
                     ],
                   ),
+                ),
+                const SizedBox(
+                  height: 5.0,
+                ),
+                const Text(
+                  '내가 쓴글',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const Text(
+                  '내가 쓴 댓글',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
             ),

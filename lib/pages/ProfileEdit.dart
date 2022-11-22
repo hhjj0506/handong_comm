@@ -1,5 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:handong_comm/pages/ProfilePage.dart';
+
+List<String> majorList = <String>[
+  'GLS',
+  '전산전자',
+  '경영경제',
+  '국제어문',
+  'ICT창업',
+  '법학',
+  '커뮤니케이션',
+  '공간환경',
+  '기계제어',
+  '콘텐츠융합디자인',
+  '생명과학',
+  '상담심리사회복지',
+  '창의융합',
+  'AI융합'
+];
+List<String> sexList = <String>['M', 'F'];
+List<String> yearList = <String>[
+  '13',
+  '14',
+  '15',
+  '16',
+  '17',
+  '18',
+  '19',
+  '20',
+  '21',
+  '22',
+  '23'
+];
 
 class ProfileEdit extends StatefulWidget {
   const ProfileEdit({super.key, required this.args});
@@ -19,38 +51,28 @@ class _ProfileEditState extends State<ProfileEdit> {
   final _majorController = TextEditingController();
   final _sexController = TextEditingController();
   final _yearController = TextEditingController();
-  final _totalController = TextEditingController();
+  String majorVal = majorList.first;
+  String sexVal = sexList.first;
+  String yearVal = yearList.first;
 
-  List<String> majorList = <String>[
-    'GLS',
-    '전산전자',
-    '경영경제',
-    '국제어문',
-    'ICT창업',
-    '법학',
-    '커뮤니케이션',
-    '공간환경',
-    '기계제어',
-    '콘텐츠융합디자인',
-    '생명과학',
-    '상담심리사회복지',
-    '창의융합',
-    'AI융합'
-  ];
-  List<String> sexList = <String>['M', 'F'];
-  List<String> yearList = <String>[
-    '13',
-    '14',
-    '15',
-    '16',
-    '17',
-    '18',
-    '19',
-    '20',
-    '21',
-    '22',
-    '23'
-  ];
+  Future<void> updateInfo() async {
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(widget.args.uid)
+        .update(<String, dynamic>{
+      'nickname': _nameController.text,
+      'message': _msgController.text,
+      'dead': int.parse(_deadController.text),
+      'bench': int.parse(_benchController.text),
+      'squat': int.parse(_squatController.text),
+      'total': int.parse(_squatController.text) +
+          int.parse(_benchController.text) +
+          int.parse(_deadController.text),
+      'year': int.parse(yearVal),
+      'major': majorVal,
+      'sex': sexVal,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +84,51 @@ class _ProfileEditState extends State<ProfileEdit> {
     _majorController.text = widget.args.major;
     _sexController.text = widget.args.sex;
     _yearController.text = widget.args.year.toString();
-    _totalController.text = widget.args.total.toString();
-    String majorVal = widget.args.major;
-    String sexVal = widget.args.sex;
-    String yearVal = widget.args.year.toString();
 
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
+              const SizedBox(
+                height: 5.0,
+              ),
+              const Text('Major'),
+              DropdownButton(
+                  value: majorVal,
+                  items:
+                      majorList.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem(value: value, child: Text(value));
+                  }).toList(),
+                  onChanged: (String? value) {
+                    majorVal = value!;
+                  }),
+              const SizedBox(
+                height: 5.0,
+              ),
+              const Text('Sex'),
+              DropdownButton(
+                  value: sexVal,
+                  items: sexList.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem(value: value, child: Text(value));
+                  }).toList(),
+                  onChanged: (String? value) {
+                    sexVal = value!;
+                  }),
+              const SizedBox(
+                height: 5.0,
+              ),
+              const Text('Class'),
+              DropdownButton(
+                  value: yearVal,
+                  items: yearList.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem(value: value, child: Text(value));
+                  }).toList(),
+                  onChanged: (String? value) {
+                    setState(() {
+                      yearVal = value!;
+                    });
+                  }),
               const SizedBox(
                 height: 5.0,
               ),
@@ -120,49 +177,25 @@ class _ProfileEditState extends State<ProfileEdit> {
               const SizedBox(
                 height: 5.0,
               ),
-              TextField(
-                readOnly: true,
-                controller: _totalController,
-                decoration: const InputDecoration(
-                  labelText: 'Total Weight',
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('취소')),
+                  ElevatedButton(
+                      onPressed: () async {
+                        await updateInfo();
+                        Navigator.pop(context);
+                      },
+                      child: const Text('완료')),
+                ],
               ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              DropdownButton(
-                  value: majorVal,
-                  items:
-                      majorList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem(value: value, child: Text(value));
-                  }).toList(),
-                  onChanged: (String? value) {
-                    _majorController.text = value!;
-                  }),
-              const SizedBox(
-                height: 5.0,
-              ),
-              DropdownButton(
-                  value: sexVal,
-                  items: sexList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem(value: value, child: Text(value));
-                  }).toList(),
-                  onChanged: (String? value) {
-                    _sexController.text = value!;
-                  }),
-              const SizedBox(
-                height: 5.0,
-              ),
-              DropdownButton(
-                  value: _yearController.text,
-                  items: yearList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem(value: value, child: Text(value));
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _yearController.text = value!;
-                    });
-                  }),
             ],
           ),
         ),
