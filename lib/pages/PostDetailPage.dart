@@ -64,13 +64,29 @@ class _PostDetailPageState extends State<PostDetailPage> {
                             .toDate())
                         .toString()),
                 const SizedBox(
+                  height: 5,
+                ),
+                const Divider(
+                  height: 2,
+                  color: Colors.white,
+                ),
+                const SizedBox(
                   height: 10,
                 ),
-                Image.network(snapshot.data!['photoURL']),
+                snapshot.data!['photoURL'] != ""
+                    ? Image.network(snapshot.data!['photoURL'])
+                    : const Text(''),
                 const SizedBox(
                   height: 10,
                 ),
                 Text(snapshot.data!['desc']),
+                const SizedBox(
+                  height: 5,
+                ),
+                const Divider(
+                  height: 2,
+                  color: Colors.white,
+                ),
                 const SizedBox(
                   height: 10,
                 ),

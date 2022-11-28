@@ -65,6 +65,7 @@ class _AddPostState extends State<AddPost> {
       'uid': FirebaseAuth.instance.currentUser!.uid,
       'photoURL': imagePath != '' ? photoURL : '',
       'like': [],
+      'likeSize': 0,
       'dislike': [],
       'category': categoryVal,
     });
