@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:handong_comm/pages/ProfilePage.dart';
 
@@ -56,11 +57,12 @@ class _ProfileEditState extends State<ProfileEdit> {
   String yearVal = yearList.first;
 
   Future<void> updateInfo() async {
+    await FirebaseAuth.instance.currentUser
+        ?.updateDisplayName(_nameController.text);
     await FirebaseFirestore.instance
         .collection('user')
         .doc(widget.args.uid)
         .update(<String, dynamic>{
-      'nickname': _nameController.text,
       'message': _msgController.text,
       'dead': int.parse(_deadController.text),
       'bench': int.parse(_benchController.text),

@@ -1,12 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:handong_comm/pages/AddPost.dart';
+import 'package:handong_comm/functions/AddPost.dart';
+import 'package:handong_comm/pages/PostDetailPage.dart';
+import 'package:intl/intl.dart';
 
 class CommunityPage extends StatefulWidget {
   const CommunityPage({super.key});
 
   @override
   State<CommunityPage> createState() => _CommunityPageState();
+}
+
+class DetailArgs {
+  final String id;
+
+  DetailArgs(
+    this.id,
+  );
 }
 
 const List<String> list = <String>['ASC', 'DESC'];
@@ -33,6 +43,7 @@ class _CommunityPageState extends State<CommunityPage> {
             return Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     DropdownButton(
                       value: dropdownValue,
@@ -59,13 +70,46 @@ class _CommunityPageState extends State<CommunityPage> {
                         icon: const Icon(Icons.edit))
                   ],
                 ),
-                ListView(
-                  children:
-                      snapshot.data!.docs.map((DocumentSnapshot document) {
-                    Map<String, dynamic> data =
-                        document.data()! as Map<String, dynamic>;
-                    return ListTile();
-                  }).toList(),
+                Expanded(
+                  child: ListView(
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+                      return ListTile(
+                        leading: data['photoURL'] != ''
+                            ? Image.network(data['photoURL'])
+                            : Image.network(
+                                'https://hhjj0506.github.io/static/646c1ae06960d741136caba28b1db3c0/27ab5/profile.webp'),
+                        title: Text(data['title']),
+                        subtitle: Text(
+                          data['author'] +
+                              ' | ' +
+                              DateFormat.yMMMd()
+                                  .add_jm()
+                                  .format((data['createdAt'] ?? '' as Timestamp)
+                                      .toDate())
+                                  .toString(),
+                          maxLines: 1,
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                        trailing: Column(
+                          children: [
+                            const Icon(Icons.thumb_up),
+                            Text('${data['like'].length ?? ''}'),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PostDetailPage(
+                                        args: DetailArgs(document.id),
+                                      )));
+                        },
+                      );
+                    }).toList(),
+                  ),
                 ),
               ],
             );

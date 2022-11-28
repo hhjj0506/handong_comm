@@ -65,8 +65,7 @@ class _LoginPageState extends State<LoginPage> {
           .doc(user.user!.uid)
           .set(<String, dynamic>{
         'email': user.user!.email,
-        'name': user.user!.displayName,
-        'nickname': nickname,
+        'name': FirebaseAuth.instance.currentUser!.displayName,
         'message': '',
         'uid': user.user!.uid,
         'photo': user.user!.photoURL,
@@ -78,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
         'major': 'GLS',
         'sex': 'M',
       });
+      await user.user?.updateDisplayName(nickname);
     }
   }
 

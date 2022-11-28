@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:handong_comm/pages/LoginPage.dart';
-import 'package:handong_comm/pages/ProfileEdit.dart';
+import 'package:handong_comm/functions/ProfileEdit.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -32,6 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    String username = user?.displayName ?? '';
     String url = user?.photoURL ?? '';
     String name = user?.displayName ?? '';
     final Stream<DocumentSnapshot> stream = FirebaseFirestore.instance
@@ -98,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 10.0,
                 ),
                 Text(
-                  snapshot.data!['nickname'],
+                  username,
                   style: const TextStyle(
                       fontSize: 22, fontWeight: FontWeight.bold),
                 ),
@@ -130,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      Text('이름 : $name'),
+                      Text('이름 : ${snapshot.data!['name']}'),
                       Text('학부 : ${snapshot.data!['major']}'),
                       Text('학번 : ${snapshot.data!['year']}'),
                       Text('성별 : ${snapshot.data!['sex']}'),
