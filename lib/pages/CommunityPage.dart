@@ -81,7 +81,16 @@ class _CommunityPageState extends State<CommunityPage> {
                             ? Image.network(data['photoURL'])
                             : Image.network(
                                 'https://hhjj0506.github.io/static/646c1ae06960d741136caba28b1db3c0/27ab5/profile.webp'),
-                        title: Text(data['title']),
+                        title: Row(
+                          children: [
+                            Text(data['title'] + ' '),
+                            Text(
+                              data['category'],
+                              style: const TextStyle(
+                                  fontSize: 10, color: Colors.grey),
+                            ),
+                          ],
+                        ),
                         subtitle: Text(
                           data['author'] +
                               ' | ' +

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:handong_comm/pages/CommunityPage.dart';
 import 'package:handong_comm/pages/PostDetailPage.dart';
+import 'package:handong_comm/pages/RankProfile.dart';
 import 'package:intl/intl.dart';
 
 class MainPage extends StatefulWidget {
@@ -10,6 +11,23 @@ class MainPage extends StatefulWidget {
 
   @override
   State<MainPage> createState() => _MainState();
+}
+
+class UserArgs {
+  final String id;
+  final String name;
+  final String major;
+  final int year;
+  final String sex;
+  final String intro;
+  final String photo;
+  final int squat;
+  final int bench;
+  final int dead;
+  final int total;
+
+  UserArgs(this.id, this.name, this.major, this.year, this.sex, this.intro,
+      this.photo, this.squat, this.bench, this.dead, this.total);
 }
 
 class _MainState extends State<MainPage> {
@@ -81,7 +99,16 @@ class _MainState extends State<MainPage> {
                                       ? Image.network(data['photoURL'])
                                       : Image.network(
                                           'https://hhjj0506.github.io/static/646c1ae06960d741136caba28b1db3c0/27ab5/profile.webp'),
-                                  title: Text(data['title']),
+                                  title: Row(
+                                    children: [
+                                      Text(data['title'] + ' '),
+                                      Text(
+                                        data['category'],
+                                        style: const TextStyle(
+                                            fontSize: 10, color: Colors.grey),
+                                      ),
+                                    ],
+                                  ),
                                   subtitle: Text(
                                     data['author'] +
                                         ' | ' +
@@ -148,7 +175,25 @@ class _MainState extends State<MainPage> {
                                     style: const TextStyle(fontSize: 12),
                                   ),
                                   trailing: Image.network(data['photo']),
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => RankProfile(
+                                                  args: UserArgs(
+                                                      document.id,
+                                                      data['nickname'],
+                                                      data['major'],
+                                                      data['year'],
+                                                      data['sex'],
+                                                      data['message'],
+                                                      data['photo'],
+                                                      data['squat'],
+                                                      data['bench'],
+                                                      data['dead'],
+                                                      data['total']),
+                                                )));
+                                  },
                                 );
                               }).toList(),
                             ),
