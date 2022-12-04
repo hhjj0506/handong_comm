@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:video_player/video_player.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({super.key});
@@ -19,20 +20,35 @@ List<String> categoryList = <String>['자유', '운동', '인증'];
 
 class _AddPostState extends State<AddPost> {
   final ImagePicker _picker = ImagePicker();
+  late XFile? video;
   late XFile? image;
   String imagePath = '';
   String photoURL = '';
   String fileName = '';
+  bool isVideo = false;
   final _titleController = TextEditingController();
   final _descController = TextEditingController();
   final storageRef = FirebaseStorage.instance.ref();
   File file = File('');
   String categoryVal = categoryList.first;
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
 
   Future getImageFromGallery() async {
     image = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
       imagePath = image!.path;
+      isVideo = false;
+    });
+  }
+
+  Future getVideoFromGallery() async {
+    video = await _picker.pickVideo(source: ImageSource.gallery);
+    setState(() {
+      imagePath = video!.path;
+      isVideo = true;
+      _controller = VideoPlayerController.file(File(imagePath));
+      _initializeVideoPlayerFuture = _controller.initialize();
     });
   }
 
@@ -67,7 +83,31 @@ class _AddPostState extends State<AddPost> {
       'likeSize': 0,
       'dislike': [],
       'category': categoryVal,
+      'isVideo': isVideo,
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Create and store the VideoPlayerController. The VideoPlayerController
+    // offers several different constructors to play videos from assets, files,
+    // or the internet.
+    _controller = VideoPlayerController.file(File(imagePath));
+
+    // Initialize the controller and store the Future for later use.
+    _initializeVideoPlayerFuture = _controller.initialize();
+
+    // Use the controller to loop the video.
+    _controller.setLooping(true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -79,12 +119,69 @@ class _AddPostState extends State<AddPost> {
             children: [
               imagePath == ''
                   ? const Text('선택된 사진 없음')
-                  : Image.file(File(imagePath)),
-              IconButton(
-                  onPressed: () {
-                    getImageFromGallery();
-                  },
-                  icon: const Icon(Icons.photo_camera)),
+                  : isVideo != true
+                      ? Image.file(File(imagePath))
+                      : Column(
+                          children: [
+                            FutureBuilder(
+                              future: _initializeVideoPlayerFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  // If the VideoPlayerController has finished initialization, use
+                                  // the data it provides to limit the aspect ratio of the video.
+                                  return AspectRatio(
+                                      aspectRatio:
+                                          _controller.value.aspectRatio,
+                                      // Use the VideoPlayer widget to display the video.
+                                      child: VideoPlayer(_controller));
+                                } else {
+                                  // If the VideoPlayerController is still initializing, show a
+                                  // loading spinner.
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              },
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                // Wrap the play or pause in a call to `setState`. This ensures the
+                                // correct icon is shown.
+                                setState(() {
+                                  // If the video is playing, pause it.
+                                  if (_controller.value.isPlaying) {
+                                    _controller.pause();
+                                  } else {
+                                    // If the video is paused, play it.
+                                    _controller.play();
+                                  }
+                                });
+                              },
+                              // Display the correct icon depending on the state of the player.
+                              child: Icon(
+                                _controller.value.isPlaying
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                              ),
+                            ),
+                          ],
+                        ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        getImageFromGallery();
+                      },
+                      icon: const Icon(Icons.photo_camera)),
+                  IconButton(
+                      onPressed: () {
+                        getVideoFromGallery();
+                      },
+                      icon: const Icon(Icons.video_call)),
+                ],
+              ),
               const SizedBox(
                 height: 10.0,
               ),

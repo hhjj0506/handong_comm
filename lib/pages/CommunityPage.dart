@@ -13,9 +13,11 @@ class CommunityPage extends StatefulWidget {
 
 class DetailArgs {
   final String id;
+  final String photoURL;
 
   DetailArgs(
     this.id,
+    this.photoURL,
   );
 }
 
@@ -82,10 +84,15 @@ class _CommunityPageState extends State<CommunityPage> {
                       Map<String, dynamic> data =
                           document.data()! as Map<String, dynamic>;
                       return ListTile(
-                        leading: data['photoURL'] != ''
-                            ? Image.network(data['photoURL'])
-                            : Image.network(
-                                'https://hhjj0506.github.io/static/646c1ae06960d741136caba28b1db3c0/27ab5/profile.webp'),
+                        leading: AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: data['photoURL'] != ''
+                              ? data['isVideo'] != true
+                                  ? Image.network(data['photoURL'])
+                                  : const Icon(Icons.play_arrow)
+                              : Image.network(
+                                  'https://hhjj0506.github.io/static/646c1ae06960d741136caba28b1db3c0/27ab5/profile.webp'),
+                        ),
                         title: Row(
                           children: [
                             Text(data['title'] + ' '),
@@ -118,7 +125,8 @@ class _CommunityPageState extends State<CommunityPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => PostDetailPage(
-                                        args: DetailArgs(document.id),
+                                        args: DetailArgs(
+                                            document.id, data['photoURL']),
                                       )));
                         },
                       );

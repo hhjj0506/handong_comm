@@ -49,6 +49,7 @@ class _RankingPageState extends State<RankingPage> {
   String sexValue = sexList.first;
   String yearValue = yearList.first;
   String liftValue = liftList.first;
+  String liftOrder = 'total';
 
   final CollectionReference userStream =
       FirebaseFirestore.instance.collection('user');
@@ -57,7 +58,7 @@ class _RankingPageState extends State<RankingPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: userStream.snapshots(),
+        stream: userStream.orderBy(liftOrder, descending: true).snapshots(),
         builder:
             (BuildContext context, AsyncSnapshot<QuerySnapshot> userSnapshot) {
           if (userSnapshot.hasError) {
@@ -142,6 +143,15 @@ class _RankingPageState extends State<RankingPage> {
                     }).toList(),
                     onChanged: (String? value) {
                       setState(() {
+                        if (value == '총합') {
+                          liftOrder = 'total';
+                        } else if (value == '스쿼트') {
+                          liftOrder = 'squat';
+                        } else if (value == '데드리프트') {
+                          liftOrder = 'dead';
+                        } else if (value == '벤치프레스') {
+                          liftOrder = 'squat';
+                        }
                         liftValue = value!;
                       });
                     },
@@ -160,7 +170,7 @@ class _RankingPageState extends State<RankingPage> {
                   return ListTile(
                     leading: Text(list[0].toString()), // 여기 랭킹 들어가야 함
                     title: Text(data['nickname']),
-                    subtitle: Text(data['total'].toString()),
+                    subtitle: Text(data[liftOrder].toString()),
                     trailing: Image.network(data['photo']),
                     onTap: () {
                       Navigator.push(
