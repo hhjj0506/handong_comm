@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:handong_comm/functions/PostEdit.dart';
 import 'package:handong_comm/pages/CommunityPage.dart';
 import 'package:intl/intl.dart';
 
@@ -11,6 +12,16 @@ class PostDetailPage extends StatefulWidget {
 
   @override
   State<PostDetailPage> createState() => _PostDetailPageState();
+}
+
+class PostArgs {
+  final String title;
+  final String category;
+  final String desc;
+  final String photoURL;
+  final String id;
+
+  PostArgs(this.title, this.category, this.desc, this.photoURL, this.id);
 }
 
 class _PostDetailPageState extends State<PostDetailPage> {
@@ -110,7 +121,24 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                   ? Align(
                                       alignment: Alignment.centerRight,
                                       child: IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PostEdit(
+                                                          args: PostArgs(
+                                                              snapshot.data![
+                                                                  'title'],
+                                                              snapshot.data![
+                                                                  'category'],
+                                                              snapshot.data![
+                                                                  'desc'],
+                                                              snapshot.data![
+                                                                  'photoURL'],
+                                                              widget.args.id),
+                                                        )));
+                                          },
                                           icon: const Icon(
                                               Icons.mode_edit_outline)))
                                   : const Text(''),

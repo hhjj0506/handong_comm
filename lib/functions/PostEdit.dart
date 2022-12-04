@@ -4,30 +4,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:handong_comm/pages/PostDetailPage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
-class AddPost extends StatefulWidget {
-  const AddPost({super.key});
+class PostEdit extends StatefulWidget {
+  const PostEdit({super.key, required this.args});
+
+  final PostArgs args;
 
   @override
-  State<AddPost> createState() => _AddPostState();
+  State<PostEdit> createState() => _PostEditState();
 }
 
 List<String> categoryList = <String>['자유', '운동', '인증'];
 
-class _AddPostState extends State<AddPost> {
+class _PostEditState extends State<PostEdit> {
   final ImagePicker _picker = ImagePicker();
   late XFile? image;
   String imagePath = '';
+  String prevPhoto = '';
   String photoURL = '';
   String fileName = '';
   final _titleController = TextEditingController();
   final _descController = TextEditingController();
   final storageRef = FirebaseStorage.instance.ref();
   File file = File('');
-  String categoryVal = categoryList.first;
+  String categoryVal = '';
 
   Future getImageFromGallery() async {
     image = await _picker.pickImage(source: ImageSource.gallery);
@@ -51,34 +55,36 @@ class _AddPostState extends State<AddPost> {
     }
   }
 
-  Future<DocumentReference> addPhotoAndInfo() async {
+  Future updatePost(String id) async {
     await uploadFile();
 
     return await FirebaseFirestore.instance
         .collection('community')
-        .add(<String, dynamic>{
+        .doc(id)
+        .update(<String, dynamic>{
       'title': _titleController.text,
-      'author': FirebaseAuth.instance.currentUser!.displayName,
       'desc': _descController.text,
-      'createdAt': FieldValue.serverTimestamp(),
-      'uid': FirebaseAuth.instance.currentUser!.uid,
-      'photoURL': imagePath != '' ? photoURL : '',
-      'like': [],
-      'likeSize': 0,
-      'dislike': [],
+      'photoURL': imagePath != '' ? photoURL : prevPhoto,
       'category': categoryVal,
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    prevPhoto = widget.args.photoURL;
+    _titleController.text = widget.args.title;
+    _descController.text = widget.args.desc;
+    categoryVal = widget.args.category;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
               imagePath == ''
-                  ? const Text('선택된 사진 없음')
+                  ? prevPhoto != ''
+                      ? Image.network(widget.args.photoURL)
+                      : const Text('선택된 사진이 없습니다.')
                   : Image.file(File(imagePath)),
               IconButton(
                   onPressed: () {
@@ -132,7 +138,7 @@ class _AddPostState extends State<AddPost> {
                       child: const Text('취소')),
                   ElevatedButton(
                       onPressed: () async {
-                        await addPhotoAndInfo();
+                        await updatePost(widget.args.id);
                         Navigator.pop(context);
                       },
                       child: const Text('완료')),

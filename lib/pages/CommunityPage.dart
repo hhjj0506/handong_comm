@@ -19,17 +19,21 @@ class DetailArgs {
   );
 }
 
-const List<String> list = <String>['ASC', 'DESC'];
+const List<String> catList = <String>['전체', '자유', '운동', '인증'];
 
 class _CommunityPageState extends State<CommunityPage> {
-  String dropdownValue = list.first;
+  String catDropdownValue = catList.first;
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> stream =
-        FirebaseFirestore.instance.collection('community').snapshots();
+    final CollectionReference stream =
+        FirebaseFirestore.instance.collection('community');
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
-          stream: stream,
+          stream: catDropdownValue == '전체'
+              ? stream.orderBy('createdAt', descending: true).snapshots()
+              : stream
+                  .where('category', isEqualTo: catDropdownValue)
+                  .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
@@ -46,9 +50,10 @@ class _CommunityPageState extends State<CommunityPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     DropdownButton(
-                      value: dropdownValue,
+                      value: catDropdownValue,
                       icon: const Icon(Icons.arrow_downward),
-                      items: list.map<DropdownMenuItem<String>>((String value) {
+                      items:
+                          catList.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -56,7 +61,7 @@ class _CommunityPageState extends State<CommunityPage> {
                       }).toList(),
                       onChanged: (String? value) {
                         setState(() {
-                          dropdownValue = value!;
+                          catDropdownValue = value!;
                         });
                       },
                     ),
