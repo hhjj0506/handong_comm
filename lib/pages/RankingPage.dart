@@ -66,7 +66,9 @@ class _RankingPageState extends State<RankingPage> {
           }
 
           if (userSnapshot.connectionState == ConnectionState.waiting) {
-            return const Text("Loading");
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
 
           return SingleChildScrollView(

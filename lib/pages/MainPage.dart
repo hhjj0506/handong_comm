@@ -55,7 +55,9 @@ class _MainState extends State<MainPage> {
           }
 
           if (postSnapshot.connectionState == ConnectionState.waiting) {
-            return const Text("Loading");
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
 
           return StreamBuilder(
@@ -67,7 +69,9 @@ class _MainState extends State<MainPage> {
                 }
 
                 if (userSnapshot.connectionState == ConnectionState.waiting) {
-                  return const Text("Loading");
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
 
                 return SingleChildScrollView(
@@ -112,6 +116,14 @@ class _MainState extends State<MainPage> {
                                         style: const TextStyle(
                                             fontSize: 10, color: Colors.grey),
                                       ),
+                                      data['category'] == '인증' &&
+                                              data['likeSize'] >= 10
+                                          ? const Icon(
+                                              Icons.check,
+                                              color: Colors.blue,
+                                              size: 15,
+                                            )
+                                          : const Text(''),
                                     ],
                                   ),
                                   subtitle: Text(

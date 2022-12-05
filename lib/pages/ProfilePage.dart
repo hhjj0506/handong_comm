@@ -60,7 +60,9 @@ class _ProfilePageState extends State<ProfilePage> {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text("Loading");
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
 
         return StreamBuilder(
@@ -72,7 +74,9 @@ class _ProfilePageState extends State<ProfilePage> {
               }
 
               if (postSnapshot.connectionState == ConnectionState.waiting) {
-                return const Text("Loading");
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               }
 
               return StreamBuilder(
@@ -85,7 +89,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
                     if (commSnapshot.connectionState ==
                         ConnectionState.waiting) {
-                      return const Text("Loading");
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
                     }
 
                     return Scaffold(
@@ -263,7 +269,25 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 : Image.network(
                                                     'https://hhjj0506.github.io/static/646c1ae06960d741136caba28b1db3c0/27ab5/profile.webp'),
                                           ),
-                                          title: Text(data['title']),
+                                          title: Row(
+                                            children: [
+                                              Text(data['title'] + ' '),
+                                              Text(
+                                                data['category'],
+                                                style: const TextStyle(
+                                                    fontSize: 10,
+                                                    color: Colors.grey),
+                                              ),
+                                              data['category'] == '인증' &&
+                                                      data['likeSize'] >= 10
+                                                  ? const Icon(
+                                                      Icons.check,
+                                                      color: Colors.blue,
+                                                      size: 15,
+                                                    )
+                                                  : const Text(''),
+                                            ],
+                                          ),
                                           subtitle: Text(
                                             data['author'] +
                                                 ' | ' +

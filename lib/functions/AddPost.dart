@@ -17,6 +17,7 @@ class AddPost extends StatefulWidget {
 }
 
 List<String> categoryList = <String>['자유', '운동', '인증'];
+List<String> sportsList = <String>['total', 'squat', 'dead', 'bench'];
 
 class _AddPostState extends State<AddPost> {
   final ImagePicker _picker = ImagePicker();
@@ -28,9 +29,13 @@ class _AddPostState extends State<AddPost> {
   bool isVideo = false;
   final _titleController = TextEditingController();
   final _descController = TextEditingController();
+  final _squatController = TextEditingController();
+  final _deadController = TextEditingController();
+  final _benchController = TextEditingController();
   final storageRef = FirebaseStorage.instance.ref();
   File file = File('');
   String categoryVal = categoryList.first;
+  String sportVal = sportsList.first;
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
 
@@ -84,6 +89,10 @@ class _AddPostState extends State<AddPost> {
       'dislike': [],
       'category': categoryVal,
       'isVideo': isVideo,
+      'squat': int.parse(_squatController.text),
+      'dead': int.parse(_deadController.text),
+      'bench': int.parse(_benchController.text),
+      'sports': sportVal,
     });
   }
 
@@ -211,6 +220,36 @@ class _AddPostState extends State<AddPost> {
                 controller: _descController,
                 decoration: const InputDecoration(
                   labelText: '내용',
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              TextField(
+                readOnly: categoryVal == '인증' ? false : true,
+                controller: _squatController,
+                decoration: const InputDecoration(
+                  labelText: '스쿼트 무게',
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              TextField(
+                readOnly: categoryVal == '인증' ? false : true,
+                controller: _deadController,
+                decoration: const InputDecoration(
+                  labelText: '데드리프트 무게',
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              TextField(
+                readOnly: categoryVal == '인증' ? false : true,
+                controller: _benchController,
+                decoration: const InputDecoration(
+                  labelText: '벤치프레스 무게',
                 ),
               ),
               const SizedBox(

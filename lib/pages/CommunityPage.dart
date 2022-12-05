@@ -43,7 +43,9 @@ class _CommunityPageState extends State<CommunityPage> {
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Text("Loading");
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
 
             return Column(
@@ -101,6 +103,13 @@ class _CommunityPageState extends State<CommunityPage> {
                               style: const TextStyle(
                                   fontSize: 10, color: Colors.grey),
                             ),
+                            data['category'] == '인증' && data['likeSize'] >= 10
+                                ? const Icon(
+                                    Icons.check,
+                                    color: Colors.blue,
+                                    size: 15,
+                                  )
+                                : const Text(''),
                           ],
                         ),
                         subtitle: Text(

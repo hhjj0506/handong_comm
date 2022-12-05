@@ -45,9 +45,6 @@ class ProfileEdit extends StatefulWidget {
 
 class _ProfileEditState extends State<ProfileEdit> {
   final _nameController = TextEditingController();
-  final _benchController = TextEditingController();
-  final _squatController = TextEditingController();
-  final _deadController = TextEditingController();
   final _msgController = TextEditingController();
   final _majorController = TextEditingController();
   final _sexController = TextEditingController();
@@ -64,12 +61,6 @@ class _ProfileEditState extends State<ProfileEdit> {
         .doc(widget.args.uid)
         .update(<String, dynamic>{
       'message': _msgController.text,
-      'dead': int.parse(_deadController.text),
-      'bench': int.parse(_benchController.text),
-      'squat': int.parse(_squatController.text),
-      'total': int.parse(_squatController.text) +
-          int.parse(_benchController.text) +
-          int.parse(_deadController.text),
       'year': int.parse(yearVal),
       'major': majorVal,
       'sex': sexVal,
@@ -79,9 +70,6 @@ class _ProfileEditState extends State<ProfileEdit> {
   @override
   Widget build(BuildContext context) {
     _nameController.text = widget.args.name;
-    _benchController.text = widget.args.bench.toString();
-    _squatController.text = widget.args.squat.toString();
-    _deadController.text = widget.args.dead.toString();
     _msgController.text = widget.args.message;
     _majorController.text = widget.args.major;
     _sexController.text = widget.args.sex;
@@ -147,33 +135,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                 controller: _msgController,
                 decoration: const InputDecoration(
                   labelText: 'Message',
-                ),
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              TextField(
-                controller: _benchController,
-                decoration: const InputDecoration(
-                  labelText: 'Bench Press Weight',
-                ),
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              TextField(
-                controller: _squatController,
-                decoration: const InputDecoration(
-                  labelText: 'Squat Weight',
-                ),
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              TextField(
-                controller: _deadController,
-                decoration: const InputDecoration(
-                  labelText: 'Deadlift Weight',
                 ),
               ),
               const SizedBox(

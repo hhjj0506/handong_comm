@@ -45,6 +45,18 @@ class _PostDetailPageState extends State<PostDetailPage> {
     });
   }
 
+  Future updateUserWeight(String id, int squat, int bench, int dead) async {
+    return await FirebaseFirestore.instance
+        .collection('user')
+        .doc(id)
+        .update(<String, dynamic>{
+      'squat': squat,
+      'bench': bench,
+      'dead': dead,
+      'total': squat + dead + bench,
+    });
+  }
+
   Future<DocumentReference> addComment(String id) async {
     return await FirebaseFirestore.instance
         .collection('community')
@@ -110,7 +122,15 @@ class _PostDetailPageState extends State<PostDetailPage> {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text("Loading");
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.data!['category'] == '인증' &&
+              snapshot.data!['likeSize'] >= 10) {
+            updateUserWeight(snapshot.data!['uid'], snapshot.data!['squat'],
+                snapshot.data!['bench'], snapshot.data!['dead']);
           }
 
           return snapshot.data!.exists
@@ -124,7 +144,9 @@ class _PostDetailPageState extends State<PostDetailPage> {
 
                     if (commSnapshot.connectionState ==
                         ConnectionState.waiting) {
-                      return const Text("Loading");
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
                     }
 
                     return Scaffold(
@@ -145,11 +167,24 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                           },
                                           icon:
                                               const Icon(Icons.arrow_back_ios)),
-                                      Text(
-                                        snapshot.data!['title'],
-                                        style: const TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            snapshot.data!['title'],
+                                            style: const TextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          snapshot.data!['category'] == '인증' &&
+                                                  snapshot.data!['likeSize'] >=
+                                                      10
+                                              ? const Icon(
+                                                  Icons.check,
+                                                  color: Colors.blue,
+                                                  size: 25,
+                                                )
+                                              : const Text(''),
+                                        ],
                                       ),
                                       user!.uid == snapshot.data!['uid']
                                           ? Align(
@@ -277,6 +312,39 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                     height: 10,
                                   ),
                                   Text(snapshot.data!['desc']),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  snapshot.data!['category'] == '인증'
+                                      ? Column(
+                                          children: [
+                                            Text(
+                                              '스쿼트 - ${snapshot.data!['squat']}',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15),
+                                            ),
+                                            Text(
+                                              '데드리프트 - ${snapshot.data!['dead']}',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15),
+                                            ),
+                                            Text(
+                                              '벤치프레스 - ${snapshot.data!['bench']}',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15),
+                                            ),
+                                            Text(
+                                              '총합 - ${snapshot.data!['squat'] + snapshot.data!['bench'] + snapshot.data!['dead']}',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15),
+                                            )
+                                          ],
+                                        )
+                                      : const Text(''),
                                   const SizedBox(
                                     height: 5,
                                   ),
