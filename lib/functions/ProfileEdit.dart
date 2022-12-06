@@ -49,9 +49,9 @@ class _ProfileEditState extends State<ProfileEdit> {
   final _majorController = TextEditingController();
   final _sexController = TextEditingController();
   final _yearController = TextEditingController();
-  String majorVal = majorList.first;
-  String sexVal = sexList.first;
-  String yearVal = yearList.first;
+  String majorVal = '';
+  String sexVal = '';
+  String yearVal = '';
 
   Future<void> updateInfo() async {
     await FirebaseAuth.instance.currentUser
@@ -74,54 +74,72 @@ class _ProfileEditState extends State<ProfileEdit> {
     _majorController.text = widget.args.major;
     _sexController.text = widget.args.sex;
     _yearController.text = widget.args.year.toString();
+    majorVal = widget.args.major;
+    sexVal = widget.args.sex;
+    yearVal = widget.args.year.toString();
 
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
-              const SizedBox(
-                height: 5.0,
-              ),
-              const Text('Major'),
-              DropdownButton(
-                  value: majorVal,
-                  items:
-                      majorList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem(value: value, child: Text(value));
-                  }).toList(),
-                  onChanged: (String? value) {
-                    majorVal = value!;
-                  }),
-              const SizedBox(
-                height: 5.0,
-              ),
-              const Text('Sex'),
-              DropdownButton(
-                  value: sexVal,
-                  items: sexList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem(value: value, child: Text(value));
-                  }).toList(),
-                  onChanged: (String? value) {
-                    sexVal = value!;
-                  }),
-              const SizedBox(
-                height: 5.0,
-              ),
-              const Text('Class'),
-              DropdownButton(
-                  value: yearVal,
-                  items: yearList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem(value: value, child: Text(value));
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      yearVal = value!;
-                    });
-                  }),
-              const SizedBox(
-                height: 5.0,
-              ),
+              StatefulBuilder(builder: (context, setState) {
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                    const Text('Major'),
+                    DropdownButton(
+                        value: majorVal,
+                        items: majorList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem(
+                              value: value, child: Text(value));
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            majorVal = value!;
+                          });
+                        }),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                    const Text('Sex'),
+                    DropdownButton(
+                        value: sexVal,
+                        items: sexList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem(
+                              value: value, child: Text(value));
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            sexVal = value!;
+                          });
+                        }),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                    const Text('Class'),
+                    DropdownButton(
+                        value: yearVal,
+                        items: yearList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem(
+                              value: value, child: Text(value));
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            yearVal = value!;
+                          });
+                        }),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                  ],
+                );
+              }),
               TextField(
                 controller: _nameController,
                 decoration: const InputDecoration(

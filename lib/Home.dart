@@ -3,6 +3,7 @@ import 'package:handong_comm/pages/CommunityPage.dart';
 import 'package:handong_comm/pages/MainPage.dart';
 import 'package:handong_comm/pages/ProfilePage.dart';
 import 'package:handong_comm/pages/RankingPage.dart';
+import 'package:handong_comm/pose_detection/pose_detector_view.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -32,6 +33,7 @@ class _MainState extends State<Home> {
           MainPage(),
           CommunityPage(),
           RankingPage(),
+          PoseDetectorView(),
           ProfilePage(),
         ],
         onPageChanged: (page) {
@@ -62,6 +64,13 @@ class _MainState extends State<Home> {
               color: Colors.white,
             ),
             label: '랭킹',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.fitness_center,
+              color: Colors.white,
+            ),
+            label: '자세 확인',
           ),
           BottomNavigationBarItem(
             icon: Icon(

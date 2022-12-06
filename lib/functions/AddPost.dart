@@ -89,9 +89,11 @@ class _AddPostState extends State<AddPost> {
       'dislike': [],
       'category': categoryVal,
       'isVideo': isVideo,
-      'squat': int.parse(_squatController.text),
-      'dead': int.parse(_deadController.text),
-      'bench': int.parse(_benchController.text),
+      'squat':
+          _squatController.text == '' ? 0 : int.parse(_squatController.text),
+      'dead': _deadController.text == '' ? 0 : int.parse(_deadController.text),
+      'bench':
+          _benchController.text == '' ? 0 : int.parse(_benchController.text),
       'sports': sportVal,
     });
   }
@@ -195,85 +197,95 @@ class _AddPostState extends State<AddPost> {
                 height: 10.0,
               ),
               const Text('Category'),
-              DropdownButton(
-                  value: categoryVal,
-                  items: categoryList
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem(value: value, child: Text(value));
-                  }).toList(),
-                  onChanged: (String? value) {
-                    categoryVal = value!;
-                  }),
-              const SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                controller: _titleController,
-                decoration: const InputDecoration(
-                  labelText: '제목',
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                controller: _descController,
-                decoration: const InputDecoration(
-                  labelText: '내용',
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                readOnly: categoryVal == '인증' ? false : true,
-                controller: _squatController,
-                decoration: const InputDecoration(
-                  labelText: '스쿼트 무게',
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                readOnly: categoryVal == '인증' ? false : true,
-                controller: _deadController,
-                decoration: const InputDecoration(
-                  labelText: '데드리프트 무게',
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                readOnly: categoryVal == '인증' ? false : true,
-                controller: _benchController,
-                decoration: const InputDecoration(
-                  labelText: '벤치프레스 무게',
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.red)),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('취소')),
-                  ElevatedButton(
-                      onPressed: () async {
-                        await addPhotoAndInfo();
-                        Navigator.pop(context);
-                      },
-                      child: const Text('완료')),
-                ],
-              ),
+              StatefulBuilder(builder: (context, setState) {
+                return Column(
+                  children: [
+                    DropdownButton(
+                        value: categoryVal,
+                        items: categoryList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem(
+                              value: value, child: Text(value));
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            categoryVal = value!;
+                          });
+                        }),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    TextField(
+                      controller: _titleController,
+                      decoration: const InputDecoration(
+                        labelText: '제목',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    TextField(
+                      controller: _descController,
+                      decoration: const InputDecoration(
+                        labelText: '내용',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    TextField(
+                      readOnly: categoryVal == '인증' ? false : true,
+                      controller: _squatController,
+                      decoration: const InputDecoration(
+                        labelText: '스쿼트 무게',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    TextField(
+                      readOnly: categoryVal == '인증' ? false : true,
+                      controller: _deadController,
+                      decoration: const InputDecoration(
+                        labelText: '데드리프트 무게',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    TextField(
+                      readOnly: categoryVal == '인증' ? false : true,
+                      controller: _benchController,
+                      decoration: const InputDecoration(
+                        labelText: '벤치프레스 무게',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.red)),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('취소')),
+                        ElevatedButton(
+                            onPressed: () async {
+                              await addPhotoAndInfo();
+                              Navigator.pop(context);
+                            },
+                            child: const Text('완료')),
+                      ],
+                    ),
+                  ],
+                );
+              }),
             ],
           ),
         ),

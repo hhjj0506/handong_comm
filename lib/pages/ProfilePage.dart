@@ -246,86 +246,95 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                            Column(
-                              children: [
-                                Card(
-                                  child: ListView(
-                                    shrinkWrap: true,
-                                    children: postSnapshot.data!.docs
-                                        .map((DocumentSnapshot document) {
-                                      Map<String, dynamic> data = document
-                                          .data()! as Map<String, dynamic>;
-                                      return Padding(
-                                        padding: EdgeInsets.all(8),
-                                        child: ListTile(
-                                          leading: AspectRatio(
-                                            aspectRatio: 16 / 9,
-                                            child: data['photoURL'] != ''
-                                                ? data['isVideo'] != true
-                                                    ? Image.network(
-                                                        data['photoURL'])
-                                                    : const Icon(
-                                                        Icons.play_arrow)
-                                                : Image.network(
-                                                    'https://hhjj0506.github.io/static/646c1ae06960d741136caba28b1db3c0/27ab5/profile.webp'),
-                                          ),
-                                          title: Row(
-                                            children: [
-                                              Text(data['title'] + ' '),
-                                              Text(
-                                                data['category'],
-                                                style: const TextStyle(
-                                                    fontSize: 10,
-                                                    color: Colors.grey),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Card(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(0),
+                                  child: Column(
+                                    children: [
+                                      ListView(
+                                        shrinkWrap: true,
+                                        children: postSnapshot.data!.docs
+                                            .map((DocumentSnapshot document) {
+                                          Map<String, dynamic> data = document
+                                              .data()! as Map<String, dynamic>;
+                                          return Padding(
+                                            padding: EdgeInsets.all(0),
+                                            child: ListTile(
+                                              leading: AspectRatio(
+                                                aspectRatio: 16 / 9,
+                                                child: data['photoURL'] != ''
+                                                    ? data['isVideo'] != true
+                                                        ? Image.network(
+                                                            data['photoURL'])
+                                                        : const Icon(
+                                                            Icons.play_arrow)
+                                                    : Image.network(
+                                                        'https://hhjj0506.github.io/static/646c1ae06960d741136caba28b1db3c0/27ab5/profile.webp'),
                                               ),
-                                              data['category'] == '인증' &&
-                                                      data['likeSize'] >= 10
-                                                  ? const Icon(
-                                                      Icons.check,
-                                                      color: Colors.blue,
-                                                      size: 15,
-                                                    )
-                                                  : const Text(''),
-                                            ],
-                                          ),
-                                          subtitle: Text(
-                                            data['author'] +
-                                                ' | ' +
-                                                DateFormat.yMMMd()
-                                                    .add_jm()
-                                                    .format(
-                                                        (data['createdAt'] ??
+                                              title: Row(
+                                                children: [
+                                                  Text(data['title'] + ' '),
+                                                  Text(
+                                                    data['category'],
+                                                    style: const TextStyle(
+                                                        fontSize: 10,
+                                                        color: Colors.grey),
+                                                  ),
+                                                  data['category'] == '인증' &&
+                                                          data['likeSize'] >= 10
+                                                      ? const Icon(
+                                                          Icons.check,
+                                                          color: Colors.blue,
+                                                          size: 15,
+                                                        )
+                                                      : const Text(''),
+                                                ],
+                                              ),
+                                              subtitle: Text(
+                                                data['author'] +
+                                                    ' | ' +
+                                                    DateFormat.yMMMd()
+                                                        .add_jm()
+                                                        .format((data[
+                                                                    'createdAt'] ??
                                                                 '' as Timestamp)
                                                             .toDate())
-                                                    .toString(),
-                                            maxLines: 1,
-                                            style:
-                                                const TextStyle(fontSize: 12),
-                                          ),
-                                          trailing: Column(
-                                            children: [
-                                              const Icon(Icons.thumb_up),
-                                              Text(
-                                                  '${data['like'].length ?? ''}'),
-                                            ],
-                                          ),
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PostDetailPage(
-                                                          args: DetailArgs(
-                                                              document.id,
-                                                              data['photoURL']),
-                                                        )));
-                                          },
-                                        ),
-                                      );
-                                    }).toList(),
+                                                        .toString(),
+                                                maxLines: 1,
+                                                style: const TextStyle(
+                                                    fontSize: 12),
+                                              ),
+                                              trailing: Column(
+                                                children: [
+                                                  const Icon(Icons.thumb_up),
+                                                  Text(
+                                                      '${data['like'].length ?? ''}'),
+                                                ],
+                                              ),
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            PostDetailPage(
+                                                              args: DetailArgs(
+                                                                  document.id,
+                                                                  data[
+                                                                      'photoURL']),
+                                                            )));
+                                              },
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                )),
+                              ),
                             ),
                             const SizedBox(
                               height: 5.0,
@@ -338,50 +347,67 @@ class _ProfilePageState extends State<ProfilePage> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            Column(
-                              children: [
-                                Card(
-                                  child: ListView(
-                                    shrinkWrap: true,
-                                    children: commSnapshot.data!.docs
-                                        .map((DocumentSnapshot document) {
-                                      Map<String, dynamic> commData = document
-                                          .data()! as Map<String, dynamic>;
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: ListTile(
-                                          leading: Text(commData['author']),
-                                          title: Text(commData['desc']),
-                                          subtitle: Text(
-                                            DateFormat.yMMMd()
-                                                .add_jm()
-                                                .format(
-                                                    (commData['createdAt'] ??
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Card(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(0),
+                                  child: Column(
+                                    children: [
+                                      ListView(
+                                        shrinkWrap: true,
+                                        children: commSnapshot.data!.docs
+                                            .map((DocumentSnapshot document) {
+                                          Map<String, dynamic> commData =
+                                              document.data()!
+                                                  as Map<String, dynamic>;
+                                          return Padding(
+                                            padding: const EdgeInsets.all(8),
+                                            child: ListTile(
+                                              leading: Text(commData['author']),
+                                              title: Text(commData['desc']),
+                                              subtitle: Text(
+                                                DateFormat.yMMMd()
+                                                    .add_jm()
+                                                    .format((commData[
+                                                                'createdAt'] ??
                                                             '' as Timestamp)
                                                         .toDate())
-                                                .toString(),
-                                          ),
-                                          trailing: user?.uid == commData['uid']
-                                              ? IconButton(
-                                                  icon:
-                                                      const Icon(Icons.delete),
-                                                  onPressed: () {
-                                                    FirebaseFirestore.instance
-                                                        .collection('community')
-                                                        .doc(document.reference
-                                                            .parent.parent!.id)
-                                                        .collection('comment')
-                                                        .doc(document.id)
-                                                        .delete();
-                                                  },
-                                                )
-                                              : const Text(''),
-                                        ),
-                                      );
-                                    }).toList(),
+                                                    .toString(),
+                                                maxLines: 1,
+                                              ),
+                                              trailing: user?.uid ==
+                                                      commData['uid']
+                                                  ? IconButton(
+                                                      icon: const Icon(
+                                                          Icons.delete),
+                                                      onPressed: () {
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'community')
+                                                            .doc(document
+                                                                .reference
+                                                                .parent
+                                                                .parent!
+                                                                .id)
+                                                            .collection(
+                                                                'comment')
+                                                            .doc(document.id)
+                                                            .delete();
+                                                      },
+                                                    )
+                                                  : const Text(''),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                )),
+                              ),
                             ),
                           ],
                         ),

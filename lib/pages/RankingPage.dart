@@ -51,14 +51,77 @@ class _RankingPageState extends State<RankingPage> {
   String liftValue = liftList.first;
   String liftOrder = 'total';
 
-  final CollectionReference userStream =
-      FirebaseFirestore.instance.collection('user');
+  //final CollectionReference userStream =FirebaseFirestore.instance.collection('user');
+  late Stream<QuerySnapshot> userStream;
 
   var list = List<int>.generate(10, (i) => i + 1);
   @override
   Widget build(BuildContext context) {
+    // 모두 선택이 되었을 때
+
+    if (majorValue != '전공' && sexValue != '성별' && yearValue != '학번') {
+      userStream = FirebaseFirestore.instance
+          .collection('user')
+          .where('major', isEqualTo: majorValue)
+          .where('sex', isEqualTo: sexValue)
+          .where('year', isEqualTo: int.parse(yearValue))
+          .orderBy(liftOrder, descending: true)
+          .snapshots();
+    } else if (majorValue != '전공' && sexValue != '성별') {
+      // 전공과 성별이 선택 되었을 때
+      userStream = FirebaseFirestore.instance
+          .collection('user')
+          .where('major', isEqualTo: majorValue)
+          .where('sex', isEqualTo: sexValue)
+          .orderBy(liftOrder, descending: true)
+          .snapshots();
+    } else if (sexValue != '성별' && yearValue != '학번') {
+      // 성별과 학번이 선택 되었을 때
+      userStream = FirebaseFirestore.instance
+          .collection('user')
+          .where('sex', isEqualTo: sexValue)
+          .where('year', isEqualTo: int.parse(yearValue))
+          .orderBy(liftOrder, descending: true)
+          .snapshots();
+    } else if (majorValue != '전공' && yearValue != '학번') {
+      // 전공과 학번이 선택 되었을 때
+      userStream = FirebaseFirestore.instance
+          .collection('user')
+          .where('major', isEqualTo: majorValue)
+          .where('year', isEqualTo: int.parse(yearValue))
+          .orderBy(liftOrder, descending: true)
+          .snapshots();
+    } else if (majorValue != '전공') {
+      // 전공만 선택 되었을 때
+      userStream = FirebaseFirestore.instance
+          .collection('user')
+          .where('major', isEqualTo: majorValue)
+          .orderBy(liftOrder, descending: true)
+          .snapshots();
+    } else if (sexValue != '성별') {
+      // 성별만 선택 되었을 때
+      userStream = FirebaseFirestore.instance
+          .collection('user')
+          .where('sex', isEqualTo: sexValue)
+          .orderBy(liftOrder, descending: true)
+          .snapshots();
+    } else if (yearValue != '학번') {
+      // 학번만 선택 되었을 때
+      userStream = FirebaseFirestore.instance
+          .collection('user')
+          .where('year', isEqualTo: int.parse(yearValue))
+          .orderBy(liftOrder, descending: true)
+          .snapshots();
+    } else {
+      // 모두가 선택이 되지 않았을 때
+      userStream = FirebaseFirestore.instance
+          .collection('user')
+          .orderBy(liftOrder, descending: true)
+          .snapshots();
+    }
+
     return StreamBuilder(
-        stream: userStream.orderBy(liftOrder, descending: true).snapshots(),
+        stream: userStream,
         builder:
             (BuildContext context, AsyncSnapshot<QuerySnapshot> userSnapshot) {
           if (userSnapshot.hasError) {

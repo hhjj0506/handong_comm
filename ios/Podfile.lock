@@ -62,13 +62,45 @@ PODS:
     - FirebaseCoreExtension (~> 10.0)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
   - Flutter (1.0.0)
+  - google_mlkit_commons (0.2.0):
+    - Flutter
+    - MLKitVision
+  - google_mlkit_pose_detection (0.5.0):
+    - Flutter
+    - google_mlkit_commons
+    - GoogleMLKit/PoseDetection (~> 3.2.0)
+    - GoogleMLKit/PoseDetectionAccurate (~> 3.2.0)
   - google_sign_in_ios (0.0.1):
     - Flutter
     - GoogleSignIn (~> 6.2)
+  - GoogleDataTransport (9.2.0):
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleMLKit/MLKitCore (3.2.0):
+    - MLKitCommon (~> 8.0.0)
+  - GoogleMLKit/PoseDetection (3.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitPoseDetection (~> 1.0.0-beta10)
+  - GoogleMLKit/PoseDetectionAccurate (3.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitPoseDetectionAccurate (~> 1.0.0-beta10)
   - GoogleSignIn (6.2.4):
     - AppAuth (~> 1.5)
     - GTMAppAuth (~> 1.3)
     - GTMSessionFetcher/Core (< 3.0, >= 1.1)
+  - GoogleToolboxForMac/DebugUtils (2.3.2):
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - GoogleToolboxForMac/Defines (2.3.2)
+  - GoogleToolboxForMac/Logger (2.3.2):
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - "GoogleToolboxForMac/NSData+zlib (2.3.2)":
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.2)":
+    - GoogleToolboxForMac/DebugUtils (= 2.3.2)
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.2)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.3.2)"
   - GoogleUtilities/AppDelegateSwizzler (7.10.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -84,12 +116,47 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.10.0)"
   - GoogleUtilities/Reachability (7.10.0):
     - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.10.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilitiesComponents (1.1.0):
+    - GoogleUtilities/Logger
   - GTMAppAuth (1.3.1):
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 3.0, >= 1.5)
   - GTMSessionFetcher/Core (2.3.0)
   - image_picker_ios (0.0.1):
     - Flutter
+  - MLImage (1.0.0-beta3)
+  - MLKitCommon (8.0.0):
+    - GoogleDataTransport (~> 9.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - GoogleUtilities/UserDefaults (~> 7.0)
+    - GoogleUtilitiesComponents (~> 1.0)
+    - GTMSessionFetcher/Core (~> 2.1)
+    - Protobuf (~> 3.12)
+  - MLKitPoseDetection (1.0.0-beta10):
+    - MLKitCommon (~> 8.0)
+    - MLKitPoseDetectionCommon (= 1.0.0-beta10)
+    - MLKitXenoCommon (= 1.0.0-beta10)
+  - MLKitPoseDetectionAccurate (1.0.0-beta10):
+    - MLKitCommon (~> 8.0)
+    - MLKitPoseDetectionCommon (= 1.0.0-beta10)
+    - MLKitXenoCommon (= 1.0.0-beta10)
+  - MLKitPoseDetectionCommon (1.0.0-beta10):
+    - MLKitCommon (~> 8.0)
+    - MLKitXenoCommon (= 1.0.0-beta10)
+  - MLKitVision (4.2.0):
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - GTMSessionFetcher/Core (~> 2.1)
+    - MLImage (= 1.0.0-beta3)
+    - MLKitCommon (~> 8.0)
+    - Protobuf (~> 3.12)
+  - MLKitXenoCommon (1.0.0-beta10):
+    - MLKitCommon (~> 8.0)
+    - MLKitVision (~> 4.2)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -98,6 +165,7 @@ PODS:
   - path_provider_ios (0.0.1):
     - Flutter
   - PromisesObjC (2.1.1)
+  - Protobuf (3.21.10)
   - video_player_avfoundation (0.0.1):
     - Flutter
 
@@ -108,8 +176,12 @@ DEPENDENCIES:
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `10.2.0`)
   - Flutter (from `Flutter`)
+  - google_mlkit_commons (from `.symlinks/plugins/google_mlkit_commons/ios`)
+  - google_mlkit_pose_detection (from `.symlinks/plugins/google_mlkit_pose_detection/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - MLKitCommon (from `MLKitCommon.podspec.json`)
+  - MLKitVision (from `MLKitVision.podspec.json`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
 
@@ -124,12 +196,22 @@ SPEC REPOS:
     - FirebaseCoreExtension
     - FirebaseCoreInternal
     - FirebaseStorage
+    - GoogleDataTransport
+    - GoogleMLKit
     - GoogleSignIn
+    - GoogleToolboxForMac
     - GoogleUtilities
+    - GoogleUtilitiesComponents
     - GTMAppAuth
     - GTMSessionFetcher
+    - MLImage
+    - MLKitPoseDetection
+    - MLKitPoseDetectionAccurate
+    - MLKitPoseDetectionCommon
+    - MLKitXenoCommon
     - nanopb
     - PromisesObjC
+    - Protobuf
 
 EXTERNAL SOURCES:
   cloud_firestore:
@@ -145,10 +227,18 @@ EXTERNAL SOURCES:
     :tag: 10.2.0
   Flutter:
     :path: Flutter
+  google_mlkit_commons:
+    :path: ".symlinks/plugins/google_mlkit_commons/ios"
+  google_mlkit_pose_detection:
+    :path: ".symlinks/plugins/google_mlkit_pose_detection/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  MLKitCommon:
+    :podspec: MLKitCommon.podspec.json
+  MLKitVision:
+    :podspec: MLKitVision.podspec.json
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   video_player_avfoundation:
@@ -175,17 +265,31 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 8efd95c87f0210125fbd50d1a894e2693053c9c9
   FirebaseStorage: e7b3fdc90b579cda35e5a0e4c6b206325766e75a
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  google_mlkit_commons: e9070f57232c3a3e4bd42fdfa621bb1f4bb3e709
+  google_mlkit_pose_detection: d5e75ae41afbd8dec29813c4ba5fe201ecd7322e
   google_sign_in_ios: 4f85eb9f937450765c8573bb85fd8cd6a5af675c
+  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
+  GoogleMLKit: 0017a6a8372e1a182139b9def4d89be5d87ca5a7
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
+  GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
   GoogleUtilities: bad72cb363809015b1f7f19beb1f1cd23c589f95
+  GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
+  MLImage: 489dfec109f21da8621b28d476401aaf7a0d4ff4
+  MLKitCommon: 8e5dbe4b12a434e790734211e1b00ed2db3c94ae
+  MLKitPoseDetection: 619212a00d60dbd045900f351f5d536a29293209
+  MLKitPoseDetectionAccurate: bd23e4035931bfd7daf4e649a9d34c9c1cd455e8
+  MLKitPoseDetectionCommon: 440b2b41504319ff9855cd941f1e4606af069e8b
+  MLKitVision: 7798eded05a31f1ec7be02290e146fc4a253f984
+  MLKitXenoCommon: 39b7097db51f4716a2a0ff4e4459e002499f5523
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  Protobuf: ced4c17d029d7566cbfc51cfb44193e4aaafae27
   video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
 
-PODFILE CHECKSUM: 77eb0497c806070b38f646a1daefb7577bbeb336
+PODFILE CHECKSUM: f1830ecc8cea8cae7328238447a59de53677488e
 
 COCOAPODS: 1.11.3

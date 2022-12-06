@@ -24,8 +24,13 @@ class PostArgs {
   final String desc;
   final String photoURL;
   final String id;
+  final int squat;
+  final int dead;
+  final int bench;
+  final bool isVideo;
 
-  PostArgs(this.title, this.category, this.desc, this.photoURL, this.id);
+  PostArgs(this.title, this.category, this.desc, this.photoURL, this.id,
+      this.squat, this.dead, this.bench, this.isVideo);
 }
 
 class _PostDetailPageState extends State<PostDetailPage> {
@@ -208,7 +213,15 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                                                               'photoURL'],
                                                                           widget
                                                                               .args
-                                                                              .id),
+                                                                              .id,
+                                                                          snapshot.data![
+                                                                              'squat'],
+                                                                          snapshot.data![
+                                                                              'dead'],
+                                                                          snapshot.data![
+                                                                              'bench'],
+                                                                          snapshot
+                                                                              .data!['isVideo']),
                                                                     )));
                                                   },
                                                   icon: const Icon(
