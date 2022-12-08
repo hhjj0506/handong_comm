@@ -50,8 +50,8 @@ class _RankingPageState extends State<RankingPage> {
   String yearValue = yearList.first;
   String liftValue = liftList.first;
   String liftOrder = 'total';
+  int i = 0;
 
-  //final CollectionReference userStream =FirebaseFirestore.instance.collection('user');
   late Stream<QuerySnapshot> userStream;
 
   var list = List<int>.generate(10, (i) => i + 1);
@@ -230,10 +230,11 @@ class _RankingPageState extends State<RankingPage> {
                 shrinkWrap: true,
                 children:
                     userSnapshot.data!.docs.map((DocumentSnapshot document) {
+                  userSnapshot.data!.size <= i ? i = 0 : '';
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
                   return ListTile(
-                    leading: Text(list[0].toString()), // 여기 랭킹 들어가야 함
+                    leading: Text(list[i++].toString()), // 여기 랭킹 들어가야 함
                     title: Text(data['nickname']),
                     subtitle: Text(data[liftOrder].toString()),
                     trailing: Image.network(data['photo']),

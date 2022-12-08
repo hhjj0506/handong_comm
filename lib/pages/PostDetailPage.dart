@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:handong_comm/functions/AddComment.dart';
 import 'package:handong_comm/functions/PostEdit.dart';
 import 'package:handong_comm/pages/CommunityPage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -31,6 +32,12 @@ class PostArgs {
 
   PostArgs(this.title, this.category, this.desc, this.photoURL, this.id,
       this.squat, this.dead, this.bench, this.isVideo);
+}
+
+class CommentArgs {
+  final String id;
+
+  CommentArgs(this.id);
 }
 
 class _PostDetailPageState extends State<PostDetailPage> {
@@ -116,6 +123,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
         .collection('community')
         .doc(widget.args.id)
         .collection('comment')
+        .orderBy('createdAt')
         .snapshots();
 
     return StreamBuilder(
@@ -277,18 +285,13 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                                     if (snapshot
                                                             .connectionState ==
                                                         ConnectionState.done) {
-                                                      // If the VideoPlayerController has finished initialization, use
-                                                      // the data it provides to limit the aspect ratio of the video.
                                                       return AspectRatio(
                                                           aspectRatio:
                                                               _controller.value
                                                                   .aspectRatio,
-                                                          // Use the VideoPlayer widget to display the video.
                                                           child: VideoPlayer(
                                                               _controller));
                                                     } else {
-                                                      // If the VideoPlayerController is still initializing, show a
-                                                      // loading spinner.
                                                       return const Center(
                                                         child:
                                                             CircularProgressIndicator(),
@@ -298,20 +301,15 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                                 ),
                                                 ElevatedButton(
                                                   onPressed: () {
-                                                    // Wrap the play or pause in a call to `setState`. This ensures the
-                                                    // correct icon is shown.
                                                     setState(() {
-                                                      // If the video is playing, pause it.
                                                       if (_controller
                                                           .value.isPlaying) {
                                                         _controller.pause();
                                                       } else {
-                                                        // If the video is paused, play it.
                                                         _controller.play();
                                                       }
                                                     });
                                                   },
-                                                  // Display the correct icon depending on the state of the player.
                                                   child: Icon(
                                                     _controller.value.isPlaying
                                                         ? Icons.pause
@@ -395,17 +393,19 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  TextField(
-                                    controller: _descController,
-                                    decoration: const InputDecoration(
-                                      labelText: '댓글',
-                                    ),
-                                  ),
                                   ElevatedButton(
-                                      onPressed: () async {
-                                        await addComment(widget.args.id);
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AddComment(
+                                                      args: CommentArgs(
+                                                        widget.args.id,
+                                                      ),
+                                                    )));
                                       },
-                                      child: const Text('완료')),
+                                      child: const Text('작성')),
                                   ListView(
                                     shrinkWrap: true,
                                     children: commSnapshot.data!.docs

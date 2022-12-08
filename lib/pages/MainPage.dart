@@ -43,7 +43,7 @@ class _MainState extends State<MainPage> {
       .snapshots();
 
   var list = List<int>.generate(10, (i) => i + 1);
-  var index = 0;
+  int i = 0;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -84,11 +84,15 @@ class _MainState extends State<MainPage> {
                               Icons.trending_up,
                               color: Colors.white,
                             ),
+                            Text('  '),
                             Text(
                               "인기 있는 포스트",
                               style: TextStyle(fontSize: 24),
                             ),
                           ]),
+                      const SizedBox(
+                        height: 5,
+                      ),
                       Column(
                         children: [
                           Card(
@@ -170,11 +174,15 @@ class _MainState extends State<MainPage> {
                               Icons.equalizer,
                               color: Colors.white,
                             ),
+                            Text('  '),
                             Text(
                               "학교 전체 랭킹",
                               style: TextStyle(fontSize: 24),
                             ),
                           ]),
+                      const SizedBox(
+                        height: 5,
+                      ),
                       Column(
                         children: [
                           Card(
@@ -182,11 +190,12 @@ class _MainState extends State<MainPage> {
                               shrinkWrap: true,
                               children: userSnapshot.data!.docs
                                   .map((DocumentSnapshot document) {
+                                userSnapshot.data!.size <= i ? i = 0 : '';
                                 Map<String, dynamic> data =
                                     document.data()! as Map<String, dynamic>;
                                 return ListTile(
-                                  leading:
-                                      Text(list[0].toString()), // 여기 랭킹 들어가야 함
+                                  leading: Text(
+                                      list[i++].toString()), // 여기 랭킹 들어가야 함
                                   title: Text(data['nickname']),
                                   subtitle: Text(
                                     data['total'].toString(),

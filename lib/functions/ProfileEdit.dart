@@ -60,6 +60,7 @@ class _ProfileEditState extends State<ProfileEdit> {
         .collection('user')
         .doc(widget.args.uid)
         .update(<String, dynamic>{
+      'nickname': FirebaseAuth.instance.currentUser!.displayName,
       'message': _msgController.text,
       'year': int.parse(yearVal),
       'major': majorVal,
