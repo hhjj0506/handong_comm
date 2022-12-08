@@ -1,16 +1,3 @@
-# handong_comm
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# 강한 한동
+모바일 앱 개발 수업 Final Project를 위하여 만든 운동 커뮤니티 어플리케이션입니다.  
+Flutter와 Firebase를 사용하여 개발했습니다.
