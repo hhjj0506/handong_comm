@@ -234,7 +234,10 @@ class _RankingPageState extends State<RankingPage> {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
                   return ListTile(
-                    leading: Text(list[i++].toString()), // 여기 랭킹 들어가야 함
+                    leading: Text(
+                      list[i++].toString(),
+                      style: const TextStyle(fontSize: 20),
+                    ), // 여기 랭킹 들어가야 함
                     title: Text(data['nickname']),
                     subtitle: Text(data[liftOrder].toString()),
                     trailing: Image.network(data['photo']),

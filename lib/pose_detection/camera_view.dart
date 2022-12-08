@@ -76,7 +76,7 @@ class _CameraViewState extends State<CameraView> {
             height: 5,
           ),
           Text(
-            '자신이 운동하고 있는 사진을 선택하면 자세를 보여줍니다.',
+            '자신이 운동하고 있는 사진을 선택하면 자세를 인식합니다.',
             style: TextStyle(fontSize: 16),
           ),
         ]),

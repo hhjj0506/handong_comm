@@ -92,14 +92,25 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             const SizedBox(height: 160.0),
             Column(
-              children: <Widget>[
-                const Text(
-                  'Strong Handong',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              children: const <Widget>[
+                Icon(
+                  Icons.fitness_center,
+                  size: 75,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  '강한   ',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  '    한동',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            const SizedBox(height: 120.0),
+            const SizedBox(height: 75.0),
             OverflowBar(
               alignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -111,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.red)),
+                          MaterialStateProperty.all<Color>(Colors.blue)),
                   child: const Text(
                     'Google Signin',
                     style: TextStyle(color: Colors.white),

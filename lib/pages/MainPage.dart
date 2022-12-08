@@ -195,7 +195,9 @@ class _MainState extends State<MainPage> {
                                     document.data()! as Map<String, dynamic>;
                                 return ListTile(
                                   leading: Text(
-                                      list[i++].toString()), // 여기 랭킹 들어가야 함
+                                    list[i++].toString(),
+                                    style: const TextStyle(fontSize: 20),
+                                  ), // 여기 랭킹 들어가야 함
                                   title: Text(data['nickname']),
                                   subtitle: Text(
                                     data['total'].toString(),

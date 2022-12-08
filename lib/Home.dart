@@ -70,7 +70,7 @@ class _MainState extends State<Home> {
               Icons.fitness_center,
               color: Colors.white,
             ),
-            label: '자세 확인',
+            label: '자세 인식',
           ),
           BottomNavigationBarItem(
             icon: Icon(
