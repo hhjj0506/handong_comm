@@ -53,21 +53,35 @@ class _CommunityPageState extends State<CommunityPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    DropdownButton(
-                      value: catDropdownValue,
-                      icon: const Icon(Icons.arrow_downward),
-                      items:
-                          catList.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? value) {
-                        setState(() {
-                          catDropdownValue = value!;
-                        });
-                      },
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                          color: Colors.black26,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: DropdownButton(
+                          icon: const Icon(Icons.arrow_downward),
+                          iconEnabledColor: Colors.white,
+                          underline: Container(),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                          value: catDropdownValue,
+                          items: catList
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (String? value) {
+                            setState(() {
+                              catDropdownValue = value!;
+                            });
+                          },
+                        ),
+                      ),
                     ),
                     IconButton(
                         onPressed: () {
@@ -97,9 +111,15 @@ class _CommunityPageState extends State<CommunityPage> {
                         ),
                         title: Row(
                           children: [
-                            Text(data['title'] + ' '),
+                            Expanded(
+                              child: Text(
+                                data['title'] + ' ',
+                                maxLines: 1,
+                              ),
+                            ),
                             Text(
                               data['category'],
+                              maxLines: 1,
                               style: const TextStyle(
                                   fontSize: 10, color: Colors.grey),
                             ),

@@ -140,86 +140,148 @@ class _RankingPageState extends State<RankingPage> {
                 "랭킹",
                 style: TextStyle(fontSize: 24),
               ),
+              const SizedBox(
+                height: 5,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  DropdownButton(
-                    value: majorValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    items:
-                        majorList.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? value) {
-                      setState(() {
-                        majorValue = value!;
-                      });
-                    },
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        underline: Container(),
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                        value: majorValue,
+                        icon: const Icon(Icons.arrow_downward),
+                        items: majorList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            majorValue = value!;
+                          });
+                        },
+                      ),
+                    ),
                   ),
-                  DropdownButton(
-                    value: sexValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    items:
-                        sexList.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? value) {
-                      setState(() {
-                        sexValue = value!;
-                      });
-                    },
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        underline: Container(),
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                        value: sexValue,
+                        icon: const Icon(Icons.arrow_downward),
+                        items: sexList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            sexValue = value!;
+                          });
+                        },
+                      ),
+                    ),
                   ),
-                  DropdownButton(
-                    value: yearValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    items:
-                        yearList.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? value) {
-                      setState(() {
-                        yearValue = value!;
-                      });
-                    },
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        underline: Container(),
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                        value: yearValue,
+                        icon: const Icon(Icons.arrow_downward),
+                        items: yearList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            yearValue = value!;
+                          });
+                        },
+                      ),
+                    ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  DropdownButton(
-                    value: liftValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    items:
-                        liftList.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? value) {
-                      setState(() {
-                        if (value == '총합') {
-                          liftOrder = 'total';
-                        } else if (value == '스쿼트') {
-                          liftOrder = 'squat';
-                        } else if (value == '데드리프트') {
-                          liftOrder = 'dead';
-                        } else if (value == '벤치프레스') {
-                          liftOrder = 'squat';
-                        }
-                        liftValue = value!;
-                      });
-                    },
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        underline: Container(),
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                        value: liftValue,
+                        icon: const Icon(Icons.arrow_downward),
+                        items: liftList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            if (value == '총합') {
+                              liftOrder = 'total';
+                            } else if (value == '스쿼트') {
+                              liftOrder = 'squat';
+                            } else if (value == '데드리프트') {
+                              liftOrder = 'dead';
+                            } else if (value == '벤치프레스') {
+                              liftOrder = 'squat';
+                            }
+                            liftValue = value!;
+                          });
+                        },
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -238,7 +300,10 @@ class _RankingPageState extends State<RankingPage> {
                       list[i++].toString(),
                       style: const TextStyle(fontSize: 20),
                     ), // 여기 랭킹 들어가야 함
-                    title: Text(data['nickname']),
+                    title: Text(
+                      data['nickname'],
+                      maxLines: 1,
+                    ),
                     subtitle: Text(data[liftOrder].toString()),
                     trailing: Image.network(data['photo']),
                     onTap: () {

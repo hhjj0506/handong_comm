@@ -277,9 +277,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                               ),
                                               title: Row(
                                                 children: [
-                                                  Text(data['title'] + ' '),
+                                                  Expanded(
+                                                    child: Text(
+                                                      data['title'] + ' ',
+                                                      maxLines: 1,
+                                                    ),
+                                                  ),
                                                   Text(
                                                     data['category'],
+                                                    maxLines: 1,
                                                     style: const TextStyle(
                                                         fontSize: 10,
                                                         color: Colors.grey),

@@ -34,7 +34,7 @@ class _MainState extends State<MainPage> {
   final Stream<QuerySnapshot> userStream = FirebaseFirestore.instance
       .collection('user')
       .orderBy('total', descending: true)
-      .limit(5)
+      .limit(3)
       .snapshots();
   final Stream<QuerySnapshot> postStream = FirebaseFirestore.instance
       .collection('community')
@@ -114,7 +114,12 @@ class _MainState extends State<MainPage> {
                                   ),
                                   title: Row(
                                     children: [
-                                      Text(data['title'] + ' '),
+                                      Expanded(
+                                        child: Text(
+                                          data['title'] + ' ',
+                                          maxLines: 1,
+                                        ),
+                                      ),
                                       Text(
                                         data['category'],
                                         style: const TextStyle(
@@ -198,7 +203,10 @@ class _MainState extends State<MainPage> {
                                     list[i++].toString(),
                                     style: const TextStyle(fontSize: 20),
                                   ), // 여기 랭킹 들어가야 함
-                                  title: Text(data['nickname']),
+                                  title: Text(
+                                    data['nickname'],
+                                    maxLines: 1,
+                                  ),
                                   subtitle: Text(
                                     data['total'].toString(),
                                     style: const TextStyle(fontSize: 12),
