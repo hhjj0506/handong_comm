@@ -10,3 +10,11 @@ Flutter, Firebase, Google ML Kit
 - 전공, 성별, 학번, 운동별로 나누어 혹은 전체적으로 볼 수 있는 3대 운동 무게 랭킹
 - 3대 무게 인증 글의 추천이 일정 수를 넘어가면 자동으로 해당 유저의 3대 무게를 업데이트하는 기능
 ## 스크린샷
+![](./sh_main.png)
+![](./sh_comm.png)
+![](./sh_post.png)
+![](./sh_video.png)
+![](./sh_pose1.png)
+![](./sh_pose2.png)
+![](./sh_rank.png)
+![](./sh_profile.png)
